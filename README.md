@@ -1,3 +1,3 @@
 # APIAdapter
 
-A description of this package.
+A generic wrapper around URLSession & URLRequest API.
