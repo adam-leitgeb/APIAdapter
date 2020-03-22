@@ -10,5 +10,6 @@ import Foundation
 struct ResponseWrapper<T: Decodable>: Decodable {
     let data: T
     let success: Bool
-    let message: String
+    let code: Int?
+    let message: String?
 }

@@ -98,13 +98,17 @@ extension HTTPError: LocalizedError {
     public var errorDescription: String? {
         switch responseType {
         case .redirection:
-            return NSLocalizedString("HTTPError.redirection", comment: "Further action needs to be taken in order to complete the request")
+            return "Error \(rawValue): Further action needs to be taken in order to complete the request"
+            //NSLocalizedString("HTTPError.redirection", comment: "Further action needs to be taken in order to complete the request")
         case .clientError:
-            return NSLocalizedString("HTTPError.clientError", comment: "The request contains bad syntax or cannot be fulfilled")
+            return "Error \(rawValue): The request contains bad syntax or cannot be fulfilled"
+            //NSLocalizedString("HTTPError.clientError", comment: "The request contains bad syntax or cannot be fulfilled")
         case .serverError:
-            return NSLocalizedString("HTTPError.serverError", comment: "The server failed to fulfill an apparently valid request")
+            return "Error \(rawValue): The server failed to fulfill an apparently valid request"
+            //NSLocalizedString("HTTPError.serverError", comment: "The server failed to fulfill an apparently valid request")
         case .undefined:
-            return NSLocalizedString("HTTPError.undefined", comment: "An error occured in the cloud. We are working on it")
+            return "Error \(rawValue): An error occured in the cloud. We are working on it"
+            //NSLocalizedString("HTTPError.undefined", comment: "An error occured in the cloud. We are working on it")
         }
     }
 }

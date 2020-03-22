@@ -7,12 +7,12 @@
 
 import Foundation
 
-public class APIAdapter {
+public class APIAdapter<E: ErrorDecodable> {
 
     // MARK: - Properties
 
     private let useResponseWrapper: Bool
-    private var jsonDecoder: JSONDecoder
+    private let jsonDecoder: JSONDecoder
     private var taskHistory: [URLSessionDataTask] = []
 
     // MARK: - Initialization
@@ -37,16 +37,7 @@ public class APIAdapter {
     }
 
     public func request(_ request: Request, completion: @escaping (Result<Data, Error>) -> Void) {
-        execute(request: request) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
+        execute(request: request, completion: completion)
     }
 
     public func cancelRunningTasks() {
@@ -60,7 +51,7 @@ public class APIAdapter {
     private func execute(request: Request, completion: @escaping (Result<Data, Error>) -> Void) {
         let task = URLSession.shared.dataTask(with: request.urlRequest) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data, response != nil {
-                if let error = try? self.jsonDecoder.decode(APIAdapterError.self, from: data), !error.success {
+                if let error = try? self.jsonDecoder.decode(E.self, from: data) {
                     completion(.failure(error))
                 } else {
                     completion(.success(data))
@@ -79,6 +70,8 @@ public class APIAdapter {
     }
 
     // MARK: - Utilities
+
+    // Data
 
     private func parseData<T: Decodable>(_ data: Data, into responseType: T.Type) -> Result<T, Error> {
         do {
