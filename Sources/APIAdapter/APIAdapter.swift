@@ -52,9 +52,9 @@ public class APIAdapter<E: ErrorDecodable> {
         let task = URLSession.shared.dataTask(with: request.urlRequest) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data, response != nil {
                 if let error = try? self.jsonDecoder.decode(E.self, from: data) {
-                    completion(.failure(error))
-                } else {
                     completion(.success(data))
+                } else {
+                    completion(.failure(error))
                 }
             } else if let response = response as? HTTPURLResponse, let httpError = HTTPError(rawValue: response.statusCode) {
                 completion(.failure(httpError))
