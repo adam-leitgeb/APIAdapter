@@ -33,7 +33,7 @@ extension Request {
             urlRequest.url = urlComponents?.url
         case let .jsonBody(body, query):
             urlRequest.url = urlRequest.url.flatMap { query?.url(from: $0) } ?? urlRequest.url
-            urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: body)
         case let .rawData(data):
             urlRequest.httpBody = data
