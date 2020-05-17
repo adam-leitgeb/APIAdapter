@@ -8,8 +8,8 @@
 import Foundation
 
 public struct ResponseWrapper<T: Decodable>: Decodable {
-    let data: T
-    let success: Bool
-    let code: Int?
-    let message: String?
+    public let data: T
+    public let success: Bool
+    public let code: Int?
+    public let message: String?
 }
