@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct ResponseWrapper<T: Decodable>: Decodable {
-    let data: T
-    let success: Bool
-    let message: String
+public struct ResponseWrapper<T: Decodable>: Decodable {
+    public let data: T
+    public let success: Bool
+    public let code: Int?
+    public let message: String?
 }
