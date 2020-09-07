@@ -23,6 +23,8 @@ struct LoginRequest: Request {
 let request = LoginRequest(email: "adam@email.com", password: "password")
 let apiAdapter = APIAdapter(jsonDecoder: .init())
 
+// NOTE: - Response type has to conform to protocol 'Decodable' and is automatically parsed
+
 apiAdapter.request(request, responseType: String.self) { accessToken in 
     // TODO: - Save AccessToken, display Home
 }
